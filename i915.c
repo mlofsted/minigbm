@@ -220,6 +220,9 @@ static int i915_bo_create(struct bo *bo, uint32_t width, uint32_t height,
 		bo->priv = NULL;
 		return -ENOMEM;
 	}
+#ifndef DISABLE_EXPLICIT_SYNC
+	drm_intel_gem_bo_disable_implicit_sync(i915_bo->ibos[0]);
+#endif
 
 	for (plane = 0; plane < bo->num_planes; plane++) {
 		if (plane > 0)
